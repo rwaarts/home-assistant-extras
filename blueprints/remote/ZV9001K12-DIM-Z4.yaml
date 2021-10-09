@@ -74,8 +74,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    G1_Release_on:
+      name: Group 1 release on
+      selector:
+        action: {}
+      default: []
     G1_Hold_off:
       name: Group 1 hold off
+      selector:
+        action: {}
+      default: []
+    G1_Release_off:
+      name: Group 1 release off
       selector:
         action: {}
       default: []
@@ -84,8 +94,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    G2_Release_on:
+      name: Group 2 release on
+      selector:
+        action: {}
+      default: []
     G2_Hold_off:
       name: Group 2 hold off
+      selector:
+        action: {}
+      default: []
+    G2_Release_off:
+      name: Group 2 release off
       selector:
         action: {}
       default: []
@@ -94,8 +114,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    G3_Release_on:
+      name: Group 3 release on
+      selector:
+        action: {}
+      default: []
     G3_Hold_off:
       name: Group 3 hold off
+      selector:
+        action: {}
+      default: []
+    G3_Release_off:
+      name: Group 3 release off
       selector:
         action: {}
       default: []
@@ -104,8 +134,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    G4_Release_on:
+      name: Group 4 release on
+      selector:
+        action: {}
+      default: []
     G4_Hold_off:
       name: Group 4 hold off
+      selector:
+        action: {}
+      default: []
+    G4_Release_off:
+      name: Group 4 release off
       selector:
         action: {}
       default: []
@@ -114,8 +154,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    G5_Release_on:
+      name: Group 5 release on
+      selector:
+        action: {}
+      default: []
     G5_Hold_off:
       name: Group 5 hold off
+      selector:
+        action: {}
+      default: []
+    G5_Release_off:
+      name: Group 5 release off
       selector:
         action: {}
       default: []
@@ -124,8 +174,18 @@ blueprint:
       selector:
         action: {}
       default: []
+    S1_Release:
+      name: S1 release
+      selector:
+        action: {}
+      default: []
     S2_Hold:
       name: S2 hold
+      selector:
+        action: {}
+      default: []
+    S2_Release:
+      name: S2 release
       selector:
         action: {}
       default: []
@@ -140,7 +200,7 @@ action:
   - choose:
       - conditions:
           - condition: template
-            value_template: "{{ trigger.event.data.device_id == device_id and trigger.event.data.command_class == 91 and (trigger.event.data.value == 'KeyPressed' or trigger.event.data.value == 'KeyHeldDown') }}"
+            value_template: "{{ trigger.event.data.device_id == device_id and trigger.event.data.command_class == 91 and (trigger.event.data.value == 'KeyPressed' or trigger.event.data.value == 'KeyHeldDown' or trigger.event.data.value == 'KeyReleased') }}"
         sequence:
           - choose:
               - conditions:
@@ -197,48 +257,96 @@ action:
                 sequence: !input "G1_Hold_on"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '001' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G1_Release_on"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '002' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G1_Hold_off"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '002' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G1_Release_off"
               - conditions:
                   - condition: template
                     value_template: "{{ trigger.event.data.property_key == '003' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G2_Hold_on"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '003' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G2_Release_on"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '004' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G2_Hold_off"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '004' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G2_Release_off"
               - conditions:
                   - condition: template
                     value_template: "{{ trigger.event.data.property_key == '005' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G3_Hold_on"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '005' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G3_Release_on"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '006' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G3_Hold_off"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '006' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G3_Release_off"
               - conditions:
                   - condition: template
                     value_template: "{{ trigger.event.data.property_key == '007' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G4_Hold_on"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '007' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G4_Release_on"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '008' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G4_Hold_off"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '008' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G4_Release_off"
               - conditions:
                   - condition: template
                     value_template: "{{ trigger.event.data.property_key == '009' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G5_Hold_on"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '009' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G5_Release_on"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '010' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "G5_Hold_off"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '010' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "G5_Release_off"
               - conditions:
                   - condition: template
                     value_template: "{{ trigger.event.data.property_key == '011' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "S1_Hold"
               - conditions:
                   - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '011' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "S1_Release"
+              - conditions:
+                  - condition: template
                     value_template: "{{ trigger.event.data.property_key == '012' and trigger.event.data.value == 'KeyHeldDown' }}"
                 sequence: !input "S2_Hold"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ trigger.event.data.property_key == '012' and trigger.event.data.value == 'KeyReleased' }}"
+                sequence: !input "S2_Release"
             default:
               - service: system_log.write
                 data:
