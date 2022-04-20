@@ -18,3 +18,14 @@ Manufacturer : TuYa
 Model : TS0044
 ```
 https://raw.githubusercontent.com/rwaarts/home-assistant-extras/main/blueprints/remote/zigbee2mqtt-remote-TS0044.yaml
+
+### Blueprint for Zigbee2MQTT Button WXKG11LM
+
+```
+Zigbee Model : lumi.remote.b1acn01
+Zigbee Manufacturer : LUMI
+Description : Aqara wireless switch
+Manufacturer : Xiaomi
+Model : WXKG11LM
+```
+https://raw.githubusercontent.com/rwaarts/home-assistant-extras/main/blueprints/remote/zigbee2mqtt-button-WXKG11LM.yaml
