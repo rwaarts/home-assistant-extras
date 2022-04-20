@@ -1,0 +1,67 @@
+blueprint:
+  name: Zigbee2MQTT - Button WXKG11LM
+  description: |
+    This blueprint can be used to creat easy automatons for the WXKG11LM button connected to Zigbee2MQTT.
+  domain: automation
+  source_url: https://raw.githubusercontent.com/rwaarts/home-assistant-extras/main/blueprints/remote/zigbee2mqtt-button-WXKG11LM.yaml
+  input:
+    switch:
+      name: Switch
+      description: Use the sensor that ends with _action).
+      selector:
+        entity:
+          integration: mqtt
+          domain: sensor
+    single:
+      name: Button single press action(s)
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    double:
+      name: Button double press action(s)
+      description: Action to run on double press
+      default: []
+      selector:
+        action: {}
+    hold:
+      name: Button hold action(s)
+      description: Action to run on hold
+      default: []
+      selector:
+        action: {}
+    release:
+      name: Button release action(s)
+      description: Action to run on release
+      default: []
+      selector:
+        action: {}
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id: !input switch
+    to:
+      - "single"
+      - "double"
+      - "hold"
+      - "release"
+
+action:
+  - variables:
+      to_state: "{{ trigger.to_state.state }}"
+
+  - choose:
+      - conditions: "{{ to_state == 'single' }}"
+        sequence: !input single
+
+      - conditions: "{{ to_state == 'double' }}"
+        sequence: !input double
+
+      - conditions: "{{ to_state == 'hold' }}"
+        sequence: !input hold
+
+      - conditions: "{{ to_state == 'release' }}"
+        sequence: !input release
