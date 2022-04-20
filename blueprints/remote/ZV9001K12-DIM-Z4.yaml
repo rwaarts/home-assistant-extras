@@ -2,6 +2,7 @@ blueprint:
   name: ZV9001K12-DIM-Z4 Remote
   description: "Use the ZV9001K12-DIM-Z4 to trigger actions and events. \n"
   domain: automation
+  source_url: https://raw.githubusercontent.com/rwaarts/home-assistant-extras/main/blueprints/remote/ZV9001K12-DIM-Z4.yaml
   input:
     remote_entity:
       name: Remote Entity
