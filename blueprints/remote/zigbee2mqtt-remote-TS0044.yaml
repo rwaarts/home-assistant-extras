@@ -1,0 +1,107 @@
+blueprint:
+  name: Zigbee2MQTT - Remote TS0044
+  description: |
+    This blueprint can be used to creat easy automatons for the TS0044 Remote connected to Zigbee2MQTT.
+  domain: automation
+  source_url: https://raw.githubusercontent.com/rwaarts/home-assistant-extras/main/blueprints/remote/zigbee2mqtt-remote-TS0044.yaml
+  input:
+    switch:
+      name: Switch
+      description: Use the sensor that ends with _action).
+      selector:
+        entity:
+          integration: mqtt
+          domain: sensor
+    1_single:
+      name: Button 1 single press action(s)
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    1_double:
+      name: Button 1 double press action(s)
+      description: Action to run on double press
+      default: []
+      selector:
+        action: {}
+    2_single:
+      name: Button 2 single press action(s)
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    2_double:
+      name: Button 2 double press action(s)
+      description: Action to run on double press
+      default: []
+      selector:
+        action: {}
+    3_single:
+      name: Button 3 single press action(s)
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    3_double:
+      name: Button 3 double press action(s)
+      description: Action to run on double press
+      default: []
+      selector:
+        action: {}
+    4_single:
+      name: Button 4 single press action(s)
+      description: Action to run on single press
+      default: []
+      selector:
+        action: {}
+    4_double:
+      name: Button 4 double press action(s)
+      description: Action to run on double press
+      default: []
+      selector:
+        action: {}
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id: !input switch
+    to:
+      - "1_single"
+      - "1_double"
+      - "2_single"
+      - "2_double"
+      - "3_single"
+      - "3_double"
+      - "4_single"
+      - "4_double"
+
+action:
+  - variables:
+      to_state: "{{ trigger.to_state.state }}"
+
+  - choose:
+      - conditions: "{{ to_state == '1_single' }}"
+        sequence: !input 1_single
+
+      - conditions: "{{ to_state == '1_double' }}"
+        sequence: !input 1_double
+
+      - conditions: "{{ to_state == '2_single' }}"
+        sequence: !input 2_single
+
+      - conditions: "{{ to_state == '2_double' }}"
+        sequence: !input 2_double
+
+      - conditions: "{{ to_state == '3_single' }}"
+        sequence: !input 3_single
+
+      - conditions: "{{ to_state == '3_double' }}"
+        sequence: !input 3_double
+
+      - conditions: "{{ to_state == '4_single' }}"
+        sequence: !input 4_single
+
+      - conditions: "{{ to_state == '4_double' }}"
+        sequence: !input 4_double
